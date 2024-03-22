@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clone Trooper Card Generator</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clone Trooper Generator</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="trooper-camera">
-            <video id="cameraFeed" autoplay playsinline></video>
-            <img src="armor_with_head_cutout.png" class="armor-overlay" alt="Armor with Head Cutout">
-        </div>
-        <div class="trooper-info">
-            <h2>Trooper Name: <span id="trooperName">Random Trooper Name</span></h2>
-            <h2>Commander: <span id="commanderName">Random Commander</span></h2>
-        </div>
-        <button id="takePhoto">Take Photo</button>
+  <div class="trooper-card">
+    <div class="trooper-info">
+      <h2 id="trooper-name">Trooper Name</h2>
+      <p id="commander-name">Commander Name</p>
     </div>
-    <script src="script.js"></script>
+    <div class="trooper-image">
+      <img id="user-image" src="" alt="User Image">
+    </div>
+  </div>
+  <div class="camera-container">
+    <video id="camera-preview" autoplay></video>
+    <img src="clone_armor_overlay.png" alt="Clone Armor Overlay" class="overlay">
+    <button id="take-photo">Take Photo</button>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>

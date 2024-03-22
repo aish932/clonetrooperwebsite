@@ -1,49 +1,50 @@
-const cameraFeed = document.getElementById('cameraFeed');
-const takePhotoButton = document.getElementById('takePhoto');
+document.addEventListener('DOMContentLoaded', function () {
+  const trooperNames = ['Alpha', 'Beta', 'Gamma', 'Delta'];
+  const commanderNames = ['Obi-Wan Kenobi', 'Yoda', 'Anakin Skywalker'];
 
-// Access the camera and stream video feed
-navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        cameraFeed.srcObject = stream;
-    })
-    .catch(error => {
-        console.error('Error accessing camera:', error);
-    });
+  const trooperNameElement = document.getElementById('trooper-name');
+  const commanderNameElement = document.getElementById('commander-name');
+  const userImageElement = document.getElementById('user-image');
+  const cameraPreview = document.getElementById('camera-preview');
+  const takePhotoButton = document.getElementById('take-photo');
 
-// Handle taking photo
-takePhotoButton.addEventListener('click', () => {
+  // Function to select a random item from an array
+  function getRandomItem(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  }
+
+  // Function to update trooper card with random names
+  function updateTrooperCard() {
+    trooperNameElement.textContent = getRandomItem(trooperNames);
+    commanderNameElement.textContent = getRandomItem(commanderNames);
+  }
+
+  // Function to take a photo
+  function takePhoto() {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
-    // Set canvas dimensions to match video dimensions
-    canvas.width = cameraFeed.videoWidth;
-    canvas.height = cameraFeed.videoHeight;
+    canvas.width = cameraPreview.videoWidth;
+    canvas.height = cameraPreview.videoHeight;
 
-    // Draw the current frame of the video onto the canvas
-    context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
+    context.drawImage(cameraPreview, 0, 0, canvas.width, canvas.height);
 
-    // Extract the photo data from the canvas as a data URL
-    const photoDataUrl = canvas.toDataURL('image/png');
+    const imageDataURL = canvas.toDataURL('image/png');
+    userImageElement.src = imageDataURL;
+  }
 
-    // Display the captured photo on the trooper card
-    const trooperImage = document.getElementById('trooperImage');
-    trooperImage.src = photoDataUrl;
+  // Event listener for take photo button
+  takePhotoButton.addEventListener('click', takePhoto);
 
-    // Generate random trooper name and commander name
-    const trooperName = generateRandomTrooperName();
-    const commanderName = generateRandomCommanderName();
+  // Initialize trooper card
+  updateTrooperCard();
 
-    // Update trooper name and commander name on the card
-    document.getElementById('trooperName').innerText = trooperName;
-    document.getElementById('commanderName').innerText = commanderName;
+  // Access user camera
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+      cameraPreview.srcObject = stream;
+    })
+    .catch(function (error) {
+      console.error('Error accessing camera:', error);
+    });
 });
-
-function generateRandomTrooperName() {
-    const trooperNames = ['Shadow', 'Raven', 'Blaze', 'Viper', 'Spike', 'Thunder', 'Falcon', 'Steel', 'Ghost', 'Scorpion'];
-    return trooperNames[Math.floor(Math.random() * trooperNames.length)];
-}
-
-function generateRandomCommanderName() {
-    const commanderNames = ['Obi-Wan Kenobi', 'Yoda', 'Anakin Skywalker', 'Mace Windu', 'Luke Skywalker', 'Leia Organa', 'Ahsoka Tano'];
-    return commanderNames[Math.floor(Math.random() * commanderNames.length)];
-}
