@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const cameraContainer = document.getElementById('camera-container');
   const takePhotoButton = document.getElementById('take-photo');
   const trooperCard = document.getElementById('trooper-card');
+  const cameraPreview = document.getElementById('camera-preview');
 
   // Function to select a random item from an array
   function getRandomItem(array) {
@@ -52,12 +53,22 @@ document.addEventListener('DOMContentLoaded', function () {
     takePhoto();
   });
 
-  // Access user camera
-  navigator.mediaDevices.getUserMedia({ video: true })
-    .then(function (stream) {
-      cameraPreview.srcObject = stream;
-    })
-    .catch(function (error) {
-      console.error('Error accessing camera:', error);
-    });
+  // Access user camera (moved inside click event listener)
+  function startCamera() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function (stream) {
+        cameraPreview.srcObject = stream;
+      })
+      .catch(function (error) {
+        console.error('Error accessing camera:', error);
+      });
+  }
+
+  // Hide camera and overlay initially
+  cameraContainer.style.display = 'none';
+
+  // Initialize camera when button is clicked
+  takePhotoButton.addEventListener('click', function () {
+    startCamera();
+  });
 });
