@@ -7,19 +7,19 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="trooper-card">
+  <div class="trooper-card" id="trooper-card">
     <div class="trooper-info">
-      <h2 id="trooper-name">Trooper Name</h2>
-      <p id="commander-name">Commander Name</p>
+      <h2 id="trooper-name"></h2>
+      <p id="commander-name"></p>
     </div>
     <div class="trooper-image">
       <img id="user-image" src="" alt="User Image">
     </div>
   </div>
-  <div class="camera-container">
+  <div class="camera-container" id="camera-container">
     <video id="camera-preview" autoplay></video>
     <img src="clone_armor_overlay.png" alt="Clone Armor Overlay" class="overlay">
-    <button id="take-photo">Take Photo</button>
+    <button id="take-photo">Take Picture to Generate Clone Trooper Card</button>
   </div>
   <script src="script.js"></script>
 </body>
